@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReLeaf - Gamified Carbon Footprint Reduction</title>
+  
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#1B4332">
+  <meta name="description" content="Turn good habits into a greener world with ReLeaf.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  
+  <!-- Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>
+
+  <!-- Navigation Bar (Hidden on Landing) -->
+  <nav id="main-nav" class="nav-bar hidden">
+    <button class="nav-item active" data-target="home-page">
+      <span aria-hidden="true">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="nav-item" data-target="challenges-page">
+      <span aria-hidden="true">🎯</span>
+      <span>Challenges</span>
+    </button>
+    <button class="nav-item" data-target="coach-page">
+      <span aria-hidden="true">🤖</span>
+      <span>Coach</span>
+    </button>
+    <button class="nav-item" data-target="leaderboard-page">
+      <span aria-hidden="true">🏆</span>
+      <span>Rank</span>
+    </button>
+    <button class="nav-item" data-target="profile-page">
+      <span aria-hidden="true">👤</span>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- 1. Landing Page -->
+  <section id="landing-page" class="page active">
+    <div class="container hero-content">
+      <div style="font-size: 3rem; margin-bottom: var(--space-md);">🌿</div>
+      <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">Turn good habits into a greener world</h1>
+      <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">Complete eco challenges, earn XP, climb the leaderboard, and let AI guide your journey to net zero.</p>
+      
+      <div id="auth-container" class="card" style="max-width: 400px; margin: 0 auto; text-align: left;">
+        <div id="auth-error" style="color: var(--color-danger); font-size: var(--text-sm); margin-bottom: var(--space-sm); display: none;"></div>
+        
+        <input type="email" id="auth-email" placeholder="Email address" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-sm); border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+        <input type="password" id="auth-password" placeholder="Password" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+        
+        <div class="flex gap-sm" style="margin-bottom: var(--space-md);">
+          <button id="btn-email-signin" class="btn btn-primary" style="flex: 1; padding: var(--space-sm);">Sign In</button>
+          <button id="btn-email-signup" class="btn btn-secondary" style="flex: 1; padding: var(--space-sm);">Sign Up</button>
+        </div>
+        
+        <div style="text-align: center; color: var(--color-text-muted); margin-bottom: var(--space-md); font-size: var(--text-sm);">— or —</div>
+        
+        <button id="btn-google-login" class="btn" style="width: 100%; background: white; border: 1px solid var(--color-border); color: var(--color-text);">
+          <span style="margin-right: var(--space-sm);">G</span> Continue with Google
+        </button>
+      </div>
+
+      <div class="flex justify-center gap-sm" style="margin-top: var(--space-xl);">
+        <span class="chip">🌿 Daily Challenges</span>
+        <span class="chip">🤖 AI Coach</span>
+        <span class="chip">🏆 Leaderboard</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Home Page -->
+  <section id="home-page" class="page container">
+    <header class="flex justify-between items-center" style="margin-bottom: var(--space-lg);">
+      <div style="font-weight: bold; color: var(--color-primary);">🌿 ReLeaf</div>
+      <div id="home-streak" class="chip" style="background: var(--color-gold); color: white;">🔥 0 day streak</div>
+      <div class="flex items-center gap-sm">
+        <span id="home-xp-badge" class="chip">0 XP</span>
+        <img id="home-avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="User Avatar" style="width: 32px; height: 32px; border-radius: 50%; background: #ccc;">
+      </div>
+    </header>
+
+    <div class="card" style="background: linear-gradient(135deg, var(--color-surface), var(--color-accent-warm)); margin-bottom: var(--space-xl);">
+      <h2 id="home-greeting" style="font-size: var(--text-2xl); margin-bottom: var(--space-xs);">Good morning, Eco Warrior 🌿</h2>
+      <p id="home-subtitle" style="color: var(--color-text-muted);">You're on your way to your next milestone.</p>
+    </div>
+
+    <!-- XP Ring -->
+    <div class="xp-ring-container">
+      <svg class="xp-ring-svg">
+        <circle class="xp-ring-bg" cx="100" cy="100" r="90"></circle>
+        <circle id="home-xp-ring" class="xp-ring-progress" cx="100" cy="100" r="90"></circle>
+      </svg>
+      <div class="xp-ring-content">
+        <div id="home-level-title" style="font-weight: bold; color: var(--color-primary); font-size: var(--text-lg);">Seedling</div>
+        <div id="home-xp-text" style="color: var(--color-text-muted); font-size: var(--text-sm);">0 / 100 XP</div>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center" style="margin-bottom: var(--space-md); margin-top: var(--space-xl);">
+      <h3 style="font-size: var(--text-xl);">Today's Challenges</h3>
+      <a href="#" style="color: var(--color-accent); font-weight: bold; text-decoration: none;" onclick="document.querySelector('[data-target=challenges-page]').click(); return false;">See all →</a>
+    </div>
+    
+    <div id="home-featured-challenges" class="grid grid-cols-1 md:grid-cols-3 gap-md">
+      <!-- Populated by JS -->
+      <div class="card" style="text-align: center; color: var(--color-text-muted);">Loading challenges...</div>
+    </div>
+
+    <div class="card" style="margin-top: var(--space-xl); background: var(--color-accent-warm); border-color: var(--color-accent);">
+      <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-sm); color: var(--color-primary);">🤖 Today's Eco Tip</h3>
+      <p id="home-daily-tip">Loading your tip from Gemini...</p>
+    </div>
+  </section>
+
+  <!-- 3. Challenges Page -->
+  <section id="challenges-page" class="page container">
+    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Challenges</h2>
+    
+    <div id="challenge-filters" class="flex gap-sm" style="overflow-x: auto; padding-bottom: var(--space-sm); margin-bottom: var(--space-lg);">
+      <button class="chip btn-primary filter-btn" data-filter="all">All</button>
+      <button class="chip filter-btn" data-filter="Transport" style="background:none; border:1px solid var(--color-border);">🚗 Transport</button>
+      <button class="chip filter-btn" data-filter="Food" style="background:none; border:1px solid var(--color-border);">🥗 Food</button>
+      <button class="chip filter-btn" data-filter="Energy" style="background:none; border:1px solid var(--color-border);">⚡ Energy</button>
+      <button class="chip filter-btn" data-filter="Shopping" style="background:none; border:1px solid var(--color-border);">🛍️ Shopping</button>
+      <button class="chip filter-btn" data-filter="Community" style="background:none; border:1px solid var(--color-border);">🌳 Community</button>
+    </div>
+
+    <div id="challenges-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- 4. Coach Page -->
+  <section id="coach-page" class="page container">
+    <div style="margin-bottom: var(--space-xl);">
+      <h2 style="font-size: var(--text-3xl);">🎯 Your Weekly Missions</h2>
+      <p style="color: var(--color-text-muted); margin-bottom: var(--space-md);">Personalized by your AI coach based on your recent activity</p>
+      
+      <div id="missions-container" class="grid grid-cols-1 md:grid-cols-3 gap-md">
+        <!-- Populated by JS -->
+        <div class="card">Loading missions from Gemini...</div>
+      </div>
+      <button id="btn-refresh-missions" class="btn btn-secondary" style="margin-top: var(--space-md);">Refresh Missions</button>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid var(--color-border); margin: var(--space-xl) 0;">
+
+    <div>
+      <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">💬 Ask Your Eco Coach</h2>
+      
+      <div id="chat-window" class="chat-window" style="height: 300px; margin-bottom: var(--space-md);">
+        <div class="chat-bubble chat-bot">Hello! I'm your AI Eco Coach. How can I help you reduce your footprint today?</div>
+      </div>
+      
+      <div class="flex gap-sm">
+        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: var(--space-sm); border-radius: var(--radius-full); border: 1px solid var(--color-border);">
+        <button id="btn-chat-send" class="btn btn-primary">Send</button>
+      </div>
+
+      <div class="flex gap-sm" style="margin-top: var(--space-md); overflow-x: auto; padding-bottom: 4px;">
+        <button class="chip chat-quick-prompt">Give me 5 easy eco tips</button>
+        <button class="chip chat-quick-prompt">What's my biggest impact area?</button>
+        <button class="chip chat-quick-prompt">How does my footprint compare?</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Leaderboard Page -->
+  <section id="leaderboard-page" class="page container">
+    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Leaderboard</h2>
+    
+    <div class="card" style="background: var(--color-gold); color: white; margin-bottom: var(--space-lg); text-align: center;">
+      <strong>Season 3</strong> · Resets in 4 days
+    </div>
+
+    <div class="flex justify-center gap-sm" style="margin-bottom: var(--space-lg);">
+      <button id="tab-global" class="btn btn-primary">Global</button>
+      <button id="tab-weekly" class="btn btn-secondary" style="background: none; border: 1px solid var(--color-border);">This Week</button>
+    </div>
+
+    <div id="podium-container" class="flex justify-center items-end gap-md" style="margin-bottom: var(--space-xl); min-height: 150px;">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="leaderboard-list" class="flex-col gap-sm">
+      <!-- Populated by JS -->
+    </div>
+
+    <div id="user-rank-footer" class="card" style="position: sticky; bottom: 80px; margin-top: var(--space-lg); background: var(--color-primary); color: white; text-align: center;">
+      You are ranked #<span id="my-rank-num">--</span> globally — keep going! 🌿
+    </div>
+  </section>
+
+  <!-- 6. Profile Page -->
+  <section id="profile-page" class="page container">
+    <div class="flex-col items-center" style="margin-bottom: var(--space-xl);">
+      <img id="profile-avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="User Avatar" style="width: 100px; height: 100px; border-radius: 50%; background: #ccc; margin-bottom: var(--space-sm);">
+      <h2 id="profile-name" style="font-size: var(--text-3xl);">User Name</h2>
+      <div id="profile-level" style="color: var(--color-accent); font-weight: bold; font-size: var(--text-lg);">Level Title</div>
+      <button id="btn-logout" class="btn btn-secondary" style="margin-top: var(--space-sm); font-size: var(--text-xs); padding: var(--space-xs) var(--space-sm);">Sign Out</button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-sm" style="margin-bottom: var(--space-xl); text-align: center;">
+      <div class="card" style="padding: var(--space-md);">
+        <div id="stat-challenges" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
+        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Challenges</div>
+      </div>
+      <div class="card" style="padding: var(--space-md);">
+        <div id="stat-co2" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
+        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">kg CO₂ Saved</div>
+      </div>
+      <div class="card" style="padding: var(--space-md);">
+        <div id="stat-streak" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
+        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Day Streak</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Your Badges</h3>
+    <div id="badges-grid" class="grid grid-cols-3 md:grid-cols-4 gap-sm" style="margin-bottom: var(--space-xl);">
+      <!-- Populated by JS -->
+    </div>
+
+    <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Impact Dashboard</h3>
+    <div class="card" style="margin-bottom: var(--space-md);">
+      <div id="chart-line" style="width: 100%; height: 250px;"></div>
+    </div>
+    <div class="card" style="margin-bottom: var(--space-xl);">
+      <div id="chart-donut" style="width: 100%; height: 250px;"></div>
+    </div>
+  </section>
+
+  <!-- Application Scripts -->
+  <script src="./js/config.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/challenges.js"></script>
+  <script src="./js/leaderboard.js"></script>
+  <script src="./js/gemini.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/pwa.js"></script>
+
+</body>
+</html>
