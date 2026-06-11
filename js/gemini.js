@@ -1,13 +1,13 @@
 let chatHistory = [
-  { role: 'model', parts: [{ text: "Hello! I'm your AI Eco Coach. How can I help you reduce your footprint today?" }] }
+  { role: 'assistant', content: "Hello! I'm your AI Eco Coach. How can I help you reduce your footprint today?" }
 ];
 
 async function callGemini(promptText, useHistory = false) {
   const config = window.RELEAF_CONFIG;
-  const isMock = !config || config.gemini.apiKey === "YOUR_GEMINI_API_KEY";
+  const isMock = !config || config.gemini.apiKey === "YOUR_GEMINI_API_KEY" || config.gemini.apiKey.startsWith("AIzaSy");
 
   if (isMock) {
-    if (window.app.debug) window.app.debug('Mocking Gemini response');
+    if (window.app.debug) window.app.debug('Mocking AI response');
     return new Promise(resolve => setTimeout(() => {
       if (promptText.includes('tip for today')) {
         resolve("Turn off the tap while brushing your teeth to save up to 8 gallons of water a day!");
@@ -23,36 +23,42 @@ async function callGemini(promptText, useHistory = false) {
     }, 1000));
   }
 
-  // Real Gemini Call using REST API
+  // Real Call using Groq REST API
   const apiKey = config.gemini.apiKey;
-  // Use gemini-1.5-flash as default, prompt asks for gemini-pro but standard REST is fine.
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://api.groq.com/openai/v1/chat/completions`;
 
-  let contents = [];
+  let messages = [];
   if (useHistory) {
-    contents = [...chatHistory, { role: 'user', parts: [{ text: promptText }] }];
+    messages = [...chatHistory, { role: 'user', content: promptText }];
   } else {
-    contents = [{ role: 'user', parts: [{ text: promptText }] }];
+    messages = [{ role: 'user', content: promptText }];
   }
 
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents })
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({ 
+        model: 'llama-3.1-8b-instant',
+        messages: messages
+      })
     });
+    
     const data = await response.json();
-    if (data.candidates && data.candidates[0]) {
-      const text = data.candidates[0].content.parts[0].text;
+    if (data.choices && data.choices[0]) {
+      const text = data.choices[0].message.content;
       if (useHistory) {
-        chatHistory.push({ role: 'user', parts: [{ text: promptText }] });
-        chatHistory.push({ role: 'model', parts: [{ text }] });
+        chatHistory.push({ role: 'user', content: promptText });
+        chatHistory.push({ role: 'assistant', content: text });
       }
       return text;
     }
     throw new Error('No candidate returned');
   } catch (err) {
-    console.error('Gemini API Error:', err);
+    console.error('Groq API Error:', err);
     return "I'm having trouble connecting to my AI brain right now. Try again later!";
   }
 }
