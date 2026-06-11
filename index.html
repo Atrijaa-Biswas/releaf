@@ -62,8 +62,8 @@
       <div id="auth-container" class="card" style="max-width: 400px; margin: 0 auto; text-align: left;">
         <div id="auth-error" style="color: var(--color-danger); font-size: var(--text-sm); margin-bottom: var(--space-sm); display: none;"></div>
         
-        <input type="email" id="auth-email" placeholder="Email address" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-sm); border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
-        <input type="password" id="auth-password" placeholder="Password" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+        <input type="email" id="auth-email" placeholder="Email address" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-sm);">
+        <input type="password" id="auth-password" placeholder="Password" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-md);">
         
         <div class="flex gap-sm" style="margin-bottom: var(--space-md);">
           <button id="btn-email-signin" class="btn btn-primary" style="flex: 1; padding: var(--space-sm);">Sign In</button>
@@ -72,7 +72,7 @@
         
         <div style="text-align: center; color: var(--color-text-muted); margin-bottom: var(--space-md); font-size: var(--text-sm);">— or —</div>
         
-        <button id="btn-google-login" class="btn" style="width: 100%; background: white; border: 1px solid var(--color-border); color: var(--color-text);">
+        <button id="btn-google-login" class="btn" style="width: 100%; background: white; color: var(--color-text);">
           <span style="margin-right: var(--space-sm);">G</span> Continue with Google
         </button>
       </div>
@@ -96,7 +96,7 @@
       </div>
     </header>
 
-    <div class="card" style="background: linear-gradient(135deg, var(--color-surface), var(--color-accent-warm)); margin-bottom: var(--space-xl);">
+    <div class="card" style="background: var(--color-accent-warm); margin-bottom: var(--space-xl);">
       <h2 id="home-greeting" style="font-size: var(--text-2xl); margin-bottom: var(--space-xs);">Good morning, Eco Warrior 🌿</h2>
       <p id="home-subtitle" style="color: var(--color-text-muted);">You're on your way to your next milestone.</p>
     </div>
@@ -160,7 +160,7 @@
       <button id="btn-refresh-missions" class="btn btn-secondary" style="margin-top: var(--space-md);">Refresh Missions</button>
     </div>
 
-    <hr style="border: none; border-top: 1px solid var(--color-border); margin: var(--space-xl) 0;">
+    <hr style="border: none; border-top: var(--border-width) solid var(--color-primary); margin: var(--space-xl) 0;">
 
     <div>
       <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">💬 Ask Your Eco Coach</h2>
@@ -170,7 +170,7 @@
       </div>
       
       <div class="flex gap-sm">
-        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: var(--space-sm); border-radius: var(--radius-full); border: 1px solid var(--color-border);">
+        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: var(--space-sm);">
         <button id="btn-chat-send" class="btn btn-primary">Send</button>
       </div>
 
@@ -192,7 +192,7 @@
 
     <div class="flex justify-center gap-sm" style="margin-bottom: var(--space-lg);">
       <button id="tab-global" class="btn btn-primary">Global</button>
-      <button id="tab-weekly" class="btn btn-secondary" style="background: none; border: 1px solid var(--color-border);">This Week</button>
+      <button id="tab-weekly" class="btn btn-secondary">This Week</button>
     </div>
 
     <div id="podium-container" class="flex justify-center items-end gap-md" style="margin-bottom: var(--space-xl); min-height: 150px;">
