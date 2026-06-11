@@ -101,9 +101,31 @@ window.renderCoach = async function() {
         </div>
         <div class="flex justify-between items-center">
           <span class="chip" style="background: var(--color-primary); color: white;">+${m.xp} XP</span>
-          <button class="btn btn-secondary" style="padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs);">Accept</button>
+          <button class="btn btn-secondary accept-btn" style="padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs);">Accept</button>
         </div>
       `;
+      const btn = card.querySelector('.accept-btn');
+      btn.addEventListener('click', () => {
+        const id = 'ai_' + Date.now() + Math.floor(Math.random() * 1000);
+        window.CHALLENGES_DATA.unshift({
+          id: id,
+          category: m.category || 'AI Mission',
+          icon: '🤖',
+          difficulty: 'Medium',
+          title: m.title,
+          xp: m.xp || 20,
+          co2: 1.0
+        });
+        
+        btn.innerText = 'Accepted ✓';
+        btn.disabled = true;
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+
+        if (window.renderChallenges) {
+          window.renderChallenges();
+        }
+      });
       missionsContainer.appendChild(card);
     });
     missionsContainer.dataset.loaded = 'true';

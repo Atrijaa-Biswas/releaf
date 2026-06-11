@@ -117,12 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       // Update active styling
       document.querySelectorAll('.filter-btn').forEach(b => {
-        b.style.background = 'none';
-        b.style.border = '1px solid var(--color-border)';
-        b.style.color = 'var(--color-text)';
+        b.classList.remove('btn-primary');
       });
-      e.target.style.background = 'var(--color-primary)';
-      e.target.style.color = 'white';
+      e.target.classList.add('btn-primary');
       
       currentFilter = e.target.dataset.filter;
       window.renderChallenges();
