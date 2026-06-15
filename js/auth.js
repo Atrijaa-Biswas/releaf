@@ -144,6 +144,11 @@ async function handleUserLogin(user, isMock = false) {
     email: user.email || '',
     ...userData
   };
+  
+  if (window.initTree) {
+    window.initTree();
+  }
+  
   updateUIWithUserData();
 }
 
@@ -196,16 +201,19 @@ window.updateUserDataAfterChallenge = async function(challenge) {
   
   if (!user.completedChallenges[today]) {
     user.completedChallenges[today] = {};
-    user.streak += 1; // Increment streak on first challenge of the day
+    user.streak = (user.streak || 0) + 1; // Increment streak on first challenge of the day
   }
   
   user.completedChallenges[today][challenge.id] = true;
-  user.xp += challenge.xp;
-  user.weeklyXP += challenge.xp;
-  user.totalCO2Saved += challenge.co2;
+  user.xp = (user.xp || 0) + challenge.xp;
+  user.weeklyXP = (user.weeklyXP || 0) + challenge.xp;
+  user.totalCO2Saved = (user.totalCO2Saved || 0) + challenge.co2;
 
   const levelInfo = getLevelInfo(user.xp);
   user.level = levelInfo.level;
+  
+  // To ensure UI sees the change, we assign the mutated object back
+  window.app.currentUser = user;
 
   if (isMockMode) {
     localStorage.setItem('releaf_user_data', JSON.stringify(user));
@@ -238,6 +246,18 @@ window.updateUserDataAfterChallenge = async function(challenge) {
   }
 
   updateUIWithUserData();
+  
+  // Living tree logic
+  if (window.sproutLeaf) {
+    window.sproutLeaf();
+  }
+  
+  if (window.treeState && window.getStageFromXP) {
+    const newStage = window.getStageFromXP(user.xp);
+    if (newStage > window.treeState.stage) {
+      if (window.transitionToStage) window.transitionToStage(newStage);
+    }
+  }
 };
 
 function updateUIWithUserData() {
@@ -276,8 +296,8 @@ function updateUIWithUserData() {
     totalChallenges += Object.keys(user.completedChallenges[date]).length;
   }
   document.getElementById('stat-challenges').innerText = totalChallenges;
-  document.getElementById('stat-co2').innerText = user.totalCO2Saved.toFixed(1);
-  document.getElementById('stat-streak').innerText = user.streak;
+  document.getElementById('stat-co2').innerText = (user.totalCO2Saved || 0).toFixed(1);
+  document.getElementById('stat-streak').innerText = user.streak || 0;
 }
 
 window.renderHome = function() {
