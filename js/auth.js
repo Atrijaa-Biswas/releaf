@@ -349,10 +349,22 @@ window.renderHome = function() {
     if (isCompleted) {
       card.style.opacity = '0.6';
     }
+    
+    let titleStyle = "font-size: var(--text-base); margin-bottom: var(--space-xs);";
+    let pillStyle = "background: var(--color-gold); color: #7A4F00; font-weight: bold; font-style: normal; font-size: 0.8rem;";
+    
+    if (isCompleted) {
+      titleStyle += " color: rgba(92, 64, 51, 0.7);";
+      pillStyle = "background: transparent; color: rgba(92, 64, 51, 0.7); border: 1px solid rgba(92, 64, 51, 0.3); font-weight: bold; font-style: normal; font-size: 0.8rem;";
+    }
+
+    let doneLabel = isCompleted ? `<div style="color: #2D6A4F; font-weight: bold; font-size: var(--text-sm); margin-top: var(--space-sm);">Done ✓</div>` : '';
+
     card.innerHTML = `
       <div>
-        <h3 style="font-size: var(--text-base); margin-bottom: var(--space-xs);">${c.title}</h3>
-        <span class="chip" style="background: var(--color-primary); color: white;">+${c.xp} XP</span>
+        <h3 style="${titleStyle}">${c.title}</h3>
+        <span class="chip" style="${pillStyle}">+${c.xp} XP</span>
+        ${doneLabel}
       </div>
     `;
     grid.appendChild(card);

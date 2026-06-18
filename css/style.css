@@ -220,6 +220,17 @@ h1, h2, h3, .display-font {
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8);
 }
 
+#btn-refresh-missions {
+  background: #3B1F0A;
+  color: #F5ECD7;
+  border: 1px solid #C9922A;
+}
+
+#btn-refresh-missions:hover {
+  background: #5C3317;
+  color: #F5ECD7;
+}
+
 /* Cards: Parchment Scrolls */
 .card {
   background-color: var(--color-paper);
@@ -628,4 +639,19 @@ section.page.active {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
+}
+
+.page-section > p,
+.page-section > span,
+.stat-label,
+.xp-counter,
+.section-heading {
+  color: #F5ECD7;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
+.card p,
+.card span,
+.card small {
+  color: #3B2A1A;
 }

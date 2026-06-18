@@ -103,10 +103,10 @@ window.renderCoach = async function() {
       card.innerHTML = `
         <div>
           <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">${m.title}</h3>
-          <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-md);">${m.description}</p>
+          <p style="color: #3B2A1A; font-size: 0.9rem; margin-bottom: var(--space-md);">${m.description}</p>
         </div>
         <div class="flex justify-between items-center">
-          <span class="chip" style="background: var(--color-primary); color: white;">+${m.xp} XP</span>
+          <span class="chip" style="background: var(--color-gold); color: #7A4F00; font-style: normal; font-weight: bold; font-size: 0.8rem;">+${m.xp} XP</span>
           <button class="btn btn-secondary accept-btn" style="padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs);">Accept</button>
         </div>
       `;

@@ -73,8 +73,8 @@ window.renderLeaderboard = async function() {
     col.innerHTML = `
       <div style="font-size: 36px; filter: drop-shadow(0 0 10px ${u.color}); margin-bottom: var(--space-xs);">${crest}</div>
       <div style="font-size: var(--text-sm); font-family: var(--font-display); font-weight: bold; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; color: var(--color-paper);">${u.displayName}</div>
-      <div style="font-size: var(--text-xs); color: ${u.color}; font-style: italic;">${u.xp} XP</div>
-      <div style="width: 100%; height: ${u.height}; background: var(--color-surface); border: 2px solid ${u.color}; border-bottom: none; border-radius: 8px 8px 0 0; margin-top: var(--space-sm); display: flex; justify-content: center; padding-top: var(--space-sm); font-weight: bold; font-family: var(--font-display); font-size: var(--text-xl); color: ${u.color}; text-shadow: 0 0 5px rgba(0,0,0,0.8); box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);">${u.rank}</div>
+      <div style="font-size: 0.95rem; font-weight: bold; color: #F5ECD7; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">${u.xp} XP</div>
+      <div style="width: 100%; height: ${u.height}; background: #5C3317; border: 2px solid ${u.color}; border-bottom: none; border-radius: 8px 8px 0 0; margin-top: var(--space-sm); display: flex; justify-content: center; padding-top: var(--space-sm); font-family: var(--font-display); font-weight: bold; font-size: 2rem; color: #F5ECD7; text-shadow: 0 1px 3px rgba(0,0,0,0.5); box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);">${u.rank}</div>
     `;
     podiumContainer.appendChild(col);
   });
