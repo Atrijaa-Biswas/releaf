@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ReLeaf - Gamified Carbon Footprint Reduction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ReLeaf - The Enchanted Forest Portal</title>
   
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1B4332">
-  <meta name="description" content="Turn good habits into a greener world with ReLeaf.">
-
+  <meta name="theme-color" content="#0D1F17">
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,112 +15,82 @@
   
   <link rel="stylesheet" href="./css/style.css">
 
-  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <!-- Firebase App -->
   <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <!-- Add Firebase products that you want to use -->
   <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
   
   <!-- Google Charts -->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 </head>
 <body>
-  <!-- Magical Glowing Ambient Particles -->
-  <div class="ambient-particles"></div>
 
-  <!-- Ambient Background Tree -->
-  <div class="ambient-bg-tree">
-    <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMinYMin slice">
-      <!-- High detail magical tree silhouette -->
-      <g style="filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.2));">
-        <!-- Main Trunk & Roots -->
-        <path d="M-100,1100 Q100,600 150,400 Q180,200 250,-50 L150,-50 Q80,200 50,400 Q-50,600 -200,1100 Z" fill="rgba(10, 20, 35, 0.6)" />
-        
-        <!-- Intricate Branches -->
-        <path d="M150,400 Q300,300 500,100 Q600,0 700,-50 L650,-50 Q500,50 350,200 Q200,300 120,400 Z" fill="rgba(10, 20, 35, 0.5)" />
-        <path d="M130,250 Q250,150 400,0 L350,0 Q200,100 100,200 Z" fill="rgba(10, 20, 35, 0.5)" />
-        <path d="M350,200 Q500,150 750,100 Q900,80 1100,50 L1050,0 Q800,50 550,100 Z" fill="rgba(10, 20, 35, 0.4)" />
-        
-        <!-- Swaying Willows/Leaves Clusters -->
-        <g class="ambient-branch b1">
-          <!-- Highly detailed clustered leaves instead of abstract circles -->
-          <path d="M400,100 Q450,250 420,400 Q380,300 400,100" fill="rgba(0, 230, 118, 0.08)" style="filter: blur(8px);" />
-          <path d="M450,120 Q500,300 480,450 Q430,350 450,120" fill="rgba(0, 245, 255, 0.06)" style="filter: blur(10px);" />
-          <path d="M550,100 Q600,350 560,500 Q510,400 550,100" fill="rgba(178, 255, 89, 0.05)" style="filter: blur(12px);" />
-          <!-- Foreground sharp leaf clusters -->
-          <path d="M400,150 Q420,180 400,200 Q380,180 400,150 M450,180 Q470,210 450,230 Q430,210 450,180 M500,160 Q520,190 500,210 Q480,190 500,160" fill="rgba(0, 245, 255, 0.3)" />
-        </g>
-        
-        <g class="ambient-branch b2">
-          <path d="M650,50 Q750,250 700,450 Q620,300 650,50" fill="rgba(0, 230, 118, 0.08)" style="filter: blur(8px);" />
-          <path d="M750,80 Q850,300 800,500 Q720,350 750,80" fill="rgba(178, 255, 89, 0.06)" style="filter: blur(10px);" />
-          <path d="M850,50 Q950,250 900,450 Q820,300 850,50" fill="rgba(0, 245, 255, 0.05)" style="filter: blur(12px);" />
-          <path d="M680,100 Q700,130 680,150 Q660,130 680,100 M750,120 Q770,150 750,170 Q730,150 750,120 M820,90 Q840,120 820,140 Q800,120 820,90" fill="rgba(0, 230, 118, 0.3)" />
-        </g>
-        
-        <g class="ambient-vines">
-          <path d="M250,-50 Q280,150 250,350" fill="none" stroke="rgba(0, 230, 118, 0.15)" stroke-width="6" />
-          <path d="M300,-50 Q330,200 300,450" fill="none" stroke="rgba(0, 245, 255, 0.1)" stroke-width="4" />
-          <path d="M150,100 Q180,250 150,400" fill="none" stroke="rgba(178, 255, 89, 0.15)" stroke-width="5" />
-        </g>
-      </g>
-    </svg>
+  <!-- Parallax Background Layers -->
+  <div id="parallax-bg" class="ambient-light-cycle">
+    <div class="parallax-layer layer-1" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 500%22%3E%3Cpath d=%22M0,400 L150,250 L300,350 L500,100 L700,300 L850,200 L1000,350 L1000,500 L0,500 Z%22 fill=%22%2308140F%22/%3E%3C/svg%3E');" data-speed="0.05"></div>
+    <div class="parallax-layer layer-2" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 500%22%3E%3Cpath d=%22M50,500 L80,200 Q120,50 180,180 L220,500 M350,500 L380,150 Q420,-20 480,130 L520,500 M700,500 L730,180 Q780,20 830,160 L870,500%22 fill=%22none%22 stroke=%22%230B1C15%22 stroke-width=%2240%22/%3E%3C/svg%3E');" data-speed="0.1"></div>
+    <div class="parallax-layer layer-3" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 500%22%3E%3Cpath d=%22M0,450 Q200,380 400,450 T800,420 T1000,480 L1000,500 L0,500 Z%22 fill=%22%23122A20%22/%3E%3Cpath d=%22M250,420 Q300,350 350,430%22 fill=%22none%22 stroke=%22%2326503E%22 stroke-width=%2215%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');" data-speed="0.2"></div>
+    <div class="parallax-layer layer-4" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 500%22%3E%3Cpath d=%22M-50,500 Q50,250 150,500 M850,500 Q950,200 1050,500%22 fill=%22none%22 stroke=%22%231A3B2C%22 stroke-width=%2260%22/%3E%3C/svg%3E');" data-speed="0.35"></div>
+    <div class="parallax-layer layer-5" id="layer-light" data-speed="0.5"></div>
   </div>
 
-  <!-- Navigation Bar (Hidden on Landing) -->
+  <div id="morning-mist"></div>
+  <div id="moth-container">🦋</div>
+  <audio id="audio-owl" src="data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" preload="auto"></audio>
+
+  <!-- Navigation Bar: Wooden Waypost -->
   <nav id="main-nav" class="nav-bar hidden">
     <button class="nav-item active" data-target="home-page">
-      <span aria-hidden="true">🏠</span>
+      <span class="nav-icon" aria-hidden="true">🏠</span>
       <span>Home</span>
+      <div class="nav-lantern"></div>
     </button>
     <button class="nav-item" data-target="challenges-page">
-      <span aria-hidden="true">🎯</span>
-      <span>Challenges</span>
+      <span class="nav-icon" aria-hidden="true">📜</span>
+      <span>Trials</span>
+      <div class="nav-lantern"></div>
     </button>
     <button class="nav-item" data-target="coach-page">
-      <span aria-hidden="true">🤖</span>
-      <span>Coach</span>
+      <span class="nav-icon" aria-hidden="true">🦉</span>
+      <span>Oracle</span>
+      <div class="nav-lantern"></div>
     </button>
     <button class="nav-item" data-target="leaderboard-page">
-      <span aria-hidden="true">🏆</span>
-      <span>Rank</span>
+      <span class="nav-icon" aria-hidden="true">🏆</span>
+      <span>Hall</span>
+      <div class="nav-lantern"></div>
     </button>
     <button class="nav-item" data-target="profile-page">
-      <span aria-hidden="true">👤</span>
-      <span>Profile</span>
+      <span class="nav-icon" aria-hidden="true">👤</span>
+      <span>Spirit</span>
+      <div class="nav-lantern"></div>
     </button>
   </nav>
 
   <!-- 1. Landing Page -->
   <section id="landing-page" class="page active">
     <div class="container hero-content">
-      <div style="font-size: 3rem; margin-bottom: var(--space-md);">🌿</div>
-      <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">Turn good habits into a greener world</h1>
-      <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">Complete eco challenges, earn XP, climb the leaderboard, and let AI guide your journey to net zero.</p>
+      <h1 class="page-title" style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">
+        <span class="title-vine">Re</span>Leaf
+      </h1>
+      <p style="color: var(--color-silver); font-family: var(--font-display); font-style: italic; font-size: var(--text-lg); margin-bottom: var(--space-xl);">Step into the ancient forest...</p>
       
       <div id="auth-container" class="card" style="max-width: 400px; margin: 0 auto; text-align: left;">
         <div id="auth-error" style="color: var(--color-danger); font-size: var(--text-sm); margin-bottom: var(--space-sm); display: none;"></div>
         
-        <input type="email" id="auth-email" placeholder="Email address" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-sm);">
-        <input type="password" id="auth-password" placeholder="Password" style="width: 100%; padding: var(--space-sm); margin-bottom: var(--space-md);">
+        <input type="email" id="auth-email" placeholder="Inscribe your email" style="margin-bottom: var(--space-sm);">
+        <input type="password" id="auth-password" placeholder="Inscribe your password" style="margin-bottom: var(--space-md);">
         
         <div class="flex gap-sm" style="margin-bottom: var(--space-md);">
-          <button id="btn-email-signin" class="btn btn-primary" style="flex: 1; padding: var(--space-sm);">Sign In</button>
-          <button id="btn-email-signup" class="btn btn-secondary" style="flex: 1; padding: var(--space-sm);">Sign Up</button>
+          <button id="btn-email-signin" class="btn btn-primary" style="flex: 1;">Enter</button>
+          <button id="btn-email-signup" class="btn btn-secondary" style="flex: 1;">Pledge</button>
         </div>
         
-        <div style="text-align: center; color: var(--color-text-muted); margin-bottom: var(--space-md); font-size: var(--text-sm);">— or —</div>
+        <div style="text-align: center; color: var(--color-text-muted); margin-bottom: var(--space-md); font-family: var(--font-display); font-style: italic;">— or —</div>
         
-        <button id="btn-google-login" class="btn" style="width: 100%; border: 1px solid rgba(255,255,255,0.3); color: var(--color-text);">
-          <span style="margin-right: var(--space-sm);">G</span> Continue with Google
+        <button id="btn-google-login" class="btn btn-secondary" style="width: 100%;">
+          Invoke Google
         </button>
-      </div>
-
-      <div class="flex justify-center gap-sm" style="margin-top: var(--space-xl);">
-        <span class="chip">🌿 Daily Challenges</span>
-        <span class="chip">🤖 AI Coach</span>
-        <span class="chip">🏆 Leaderboard</span>
       </div>
     </div>
   </section>
@@ -129,52 +98,50 @@
   <!-- 2. Home Page -->
   <section id="home-page" class="page container">
     <header class="flex justify-between items-center" style="margin-bottom: var(--space-lg);">
-      <div style="font-weight: bold; color: var(--color-primary);">🌿 ReLeaf</div>
-      <div id="home-streak" class="chip" style="background: var(--color-gold); color: white;">🔥 0 day streak</div>
+      <div class="page-title" style="font-size: var(--text-xl); font-weight: bold;"><span class="title-vine">Re</span>Leaf</div>
+      <div id="home-streak" class="chip dark">🔥 0 days</div>
       <div class="flex items-center gap-sm">
         <span id="home-xp-badge" class="chip">0 XP</span>
-        <img id="home-avatar" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="User Avatar" style="width: 32px; height: 32px; border-radius: 50%; background: #ccc;">
       </div>
     </header>
 
-    <div class="card" style="border-color: var(--color-primary); margin-bottom: var(--space-xl);">
-      <h2 id="home-greeting" style="font-size: var(--text-2xl); margin-bottom: var(--space-xs);">Good morning, Eco Warrior 🌿</h2>
-      <p id="home-subtitle" style="color: var(--color-text-muted);">You're on your way to your next milestone.</p>
+    <div class="card" style="margin-bottom: var(--space-xl);">
+      <h2 id="home-greeting" style="font-size: var(--text-2xl); margin-bottom: var(--space-xs);">Greetings, Wanderer</h2>
+      <p id="home-subtitle" class="text-muted">The forest awaits your deeds.</p>
     </div>
 
-    <!-- Main Dashboard Stat instead of tree -->
-    <div class="card" style="margin: var(--space-lg) 0; text-align: center; border-color: var(--color-accent);">
-      <div id="home-level-title" style="font-weight: bold; color: var(--color-primary); font-size: var(--text-lg);">Seedling</div>
-      <div id="home-xp-text" style="color: var(--color-text-muted); font-size: var(--text-sm);">0 / 100 XP</div>
+    <!-- Main Dashboard Stat -->
+    <div style="text-align: center; margin: var(--space-2xl) 0;">
+      <div id="home-level-title" style="font-family: var(--font-display); font-weight: bold; color: var(--color-mint); font-size: var(--text-4xl); text-shadow: 0 0 15px rgba(126, 200, 160, 0.4);">Seedling</div>
+      <div id="home-xp-text" style="color: var(--color-silver); font-size: var(--text-lg); margin-top: var(--space-sm);">0 / 100 XP</div>
     </div>
 
-    <div class="flex justify-between items-center" style="margin-bottom: var(--space-md); margin-top: var(--space-xl);">
-      <h3 style="font-size: var(--text-xl);">Today's Challenges</h3>
-      <a href="#" style="color: var(--color-accent); font-weight: bold; text-decoration: none;" onclick="document.querySelector('[data-target=challenges-page]').click(); return false;">See all →</a>
+    <div class="flex justify-between items-center" style="margin-bottom: var(--space-md); margin-top: var(--space-2xl);">
+      <h3 style="font-size: var(--text-2xl);">Today's Trials</h3>
     </div>
     
     <div id="home-featured-challenges" class="grid grid-cols-1 md:grid-cols-3 gap-md">
       <!-- Populated by JS -->
-      <div class="card" style="text-align: center; color: var(--color-text-muted);">Loading challenges...</div>
+      <div class="card" style="text-align: center; color: var(--color-text-muted);">Consulting the oracle...</div>
     </div>
 
-    <div class="card" style="margin-top: var(--space-xl); border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);">
-      <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-sm); color: var(--color-primary);">🤖 Today's Eco Tip</h3>
-      <p id="home-daily-tip">Loading your tip from Gemini...</p>
+    <div class="card" style="margin-top: var(--space-xl);">
+      <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-sm); color: var(--color-gold);">🦉 Whispers of the Woods</h3>
+      <p id="home-daily-tip" style="font-style: italic;">Listening to the wind...</p>
     </div>
   </section>
 
   <!-- 3. Challenges Page -->
   <section id="challenges-page" class="page container">
-    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Challenges</h2>
+    <h2 class="page-title" style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Trials of the Earth</h2>
     
     <div id="challenge-filters" class="flex gap-sm" style="overflow-x: auto; padding-bottom: var(--space-sm); margin-bottom: var(--space-lg);">
-      <button class="chip btn-primary filter-btn" data-filter="all">All</button>
-      <button class="chip filter-btn" data-filter="Transport" style="background:none; border:1px solid var(--color-border);">🚗 Transport</button>
-      <button class="chip filter-btn" data-filter="Food" style="background:none; border:1px solid var(--color-border);">🥗 Food</button>
-      <button class="chip filter-btn" data-filter="Energy" style="background:none; border:1px solid var(--color-border);">⚡ Energy</button>
-      <button class="chip filter-btn" data-filter="Shopping" style="background:none; border:1px solid var(--color-border);">🛍️ Shopping</button>
-      <button class="chip filter-btn" data-filter="Community" style="background:none; border:1px solid var(--color-border);">🌳 Community</button>
+      <button class="chip dark filter-btn" data-filter="all">All Paths</button>
+      <button class="chip filter-btn" data-filter="Transport">Travel</button>
+      <button class="chip filter-btn" data-filter="Food">Harvest</button>
+      <button class="chip filter-btn" data-filter="Energy">Spark</button>
+      <button class="chip filter-btn" data-filter="Shopping">Trade</button>
+      <button class="chip filter-btn" data-filter="Community">Gathering</button>
     </div>
 
     <div id="challenges-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
@@ -185,49 +152,48 @@
   <!-- 4. Coach Page -->
   <section id="coach-page" class="page container">
     <div style="margin-bottom: var(--space-xl);">
-      <h2 style="font-size: var(--text-3xl);">🎯 Your Weekly Missions</h2>
-      <p style="color: var(--color-text-muted); margin-bottom: var(--space-md);">Personalized by your AI coach based on your recent activity</p>
+      <h2 class="page-title" style="font-size: var(--text-3xl);">📜 Grand Quests</h2>
+      <p style="color: var(--color-silver); font-style: italic; margin-bottom: var(--space-md);">Decrees forged by the Oracle</p>
       
       <div id="missions-container" class="grid grid-cols-1 md:grid-cols-3 gap-md">
         <!-- Populated by JS -->
-        <div class="card">Loading missions from Gemini...</div>
+        <div class="card">Awaiting visions...</div>
       </div>
-      <button id="btn-refresh-missions" class="btn btn-secondary" style="margin-top: var(--space-md);">Refresh Missions</button>
+      <button id="btn-refresh-missions" class="btn btn-secondary" style="margin-top: var(--space-md);">Seek New Visions</button>
     </div>
 
-    <hr style="border: none; border-top: var(--border-width) solid var(--color-primary); margin: var(--space-xl) 0;">
+    <hr style="border: none; border-top: 2px dashed var(--color-border); margin: var(--space-xl) 0;">
 
     <div>
-      <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">💬 Ask Your Eco Coach</h2>
+      <h2 class="page-title" style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">🦉 Consult the Oracle</h2>
       
       <div id="chat-window" class="chat-window" style="height: 300px; margin-bottom: var(--space-md);">
-        <div class="chat-bubble chat-bot">Hello! I'm your AI Eco Coach. How can I help you reduce your footprint today?</div>
+        <div class="chat-bubble chat-bot">Speak, traveler. I listen to the rustling leaves.</div>
       </div>
       
       <div class="flex gap-sm">
-        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: var(--space-sm);">
+        <input type="text" id="chat-input" placeholder="Inscribe your question...">
         <button id="btn-chat-send" class="btn btn-primary">Send</button>
       </div>
 
       <div class="flex gap-sm" style="margin-top: var(--space-md); overflow-x: auto; padding-bottom: 4px;">
-        <button class="chip chat-quick-prompt">Give me 5 easy eco tips</button>
-        <button class="chip chat-quick-prompt">What's my biggest impact area?</button>
-        <button class="chip chat-quick-prompt">How does my footprint compare?</button>
+        <button class="chip chat-quick-prompt">How to tread lighter?</button>
+        <button class="chip chat-quick-prompt">What burden do I carry?</button>
       </div>
     </div>
   </section>
 
   <!-- 5. Leaderboard Page -->
   <section id="leaderboard-page" class="page container">
-    <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Leaderboard</h2>
+    <h2 class="page-title" style="font-size: var(--text-3xl); margin-bottom: var(--space-md);">Hall of Champions</h2>
     
-    <div class="card" style="border-color: var(--color-gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); color: var(--color-gold); margin-bottom: var(--space-lg); text-align: center;">
-      <strong>Season 3</strong> · Resets in 4 days
+    <div class="card" style="border-color: var(--color-gold); text-align: center; margin-bottom: var(--space-lg);">
+      <strong style="color: var(--color-gold);">The Third Age</strong> <span style="color: var(--color-silver);">· Turns in 4 suns</span>
     </div>
 
     <div class="flex justify-center gap-sm" style="margin-bottom: var(--space-lg);">
-      <button id="tab-global" class="btn btn-primary">Global</button>
-      <button id="tab-weekly" class="btn btn-secondary">This Week</button>
+      <button id="tab-global" class="btn btn-primary">Realm</button>
+      <button id="tab-weekly" class="btn btn-secondary">Recent</button>
     </div>
 
     <div id="podium-container" class="flex justify-center items-end gap-md" style="margin-bottom: var(--space-xl); min-height: 150px;">
@@ -238,82 +204,62 @@
       <!-- Populated by JS -->
     </div>
 
-    <div id="user-rank-footer" class="card" style="position: sticky; bottom: 80px; margin-top: var(--space-lg); border-color: var(--color-primary); box-shadow: 0 -5px 20px rgba(0, 230, 118, 0.2); text-align: center;">
-      <div style="font-weight: bold; color: var(--color-primary);">Your Rank: <span id="lb-user-rank">...</span></div>
-      <div id="lb-user-xp" style="font-size: var(--text-sm); color: var(--color-text-muted);">0 XP</div>
+    <div id="user-rank-footer" class="card" style="position: sticky; bottom: 80px; margin-top: var(--space-lg); text-align: center; border-color: var(--color-mint);">
+      <div style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text-dark);">Your Standing: <strong id="lb-user-rank" style="color: var(--color-mint);">...</strong></div>
+      <div id="lb-user-xp" style="font-size: var(--text-sm); color: var(--color-silver);">0 XP</div>
     </div>
   </section>
 
   <!-- 6. Profile Page -->
   <section id="profile-page" class="page container">
     <div class="flex-col items-center">
-      
-      <!-- Living Tree Centerpiece -->
-      <div class="tree-container">
-        <svg id="living-tree" viewBox="0 0 600 500" role="img" aria-label="Your ReLeaf tree">
-          <g id="layer-sky"></g>
-          <g id="layer-ground"></g>
-          <g id="layer-trunk"></g>
-          <g id="layer-branches"></g>
-          <g id="layer-foliage-base"></g>
-          <g id="layer-leaves-dynamic"></g>
-          <g id="layer-badge-elements"></g>
-          <g id="layer-effects"></g>
-        </svg>
-      </div>
+      <div id="profile-crest" style="font-size: 80px; margin-bottom: var(--space-sm); filter: drop-shadow(0 0 10px rgba(126,200,160,0.5));">🌿</div>
 
-      <h2 id="profile-name" style="font-size: var(--text-3xl); margin-top: var(--space-md);">User Name</h2>
-      <div id="profile-level" style="color: var(--color-primary); font-weight: bold; font-size: var(--text-lg);">Level Title</div>
-      <button id="btn-logout" class="btn btn-secondary" style="margin-top: var(--space-sm); font-size: var(--text-xs); padding: var(--space-xs) var(--space-sm);">Sign Out</button>
+      <h2 id="profile-name" class="page-title" style="font-size: var(--text-3xl);">Traveler</h2>
+      <div id="profile-level" style="color: var(--color-mint); font-weight: bold; font-family: var(--font-display); font-size: var(--text-xl);">Seedling</div>
+      <button id="btn-logout" class="btn btn-secondary" style="margin-top: var(--space-md);">Depart</button>
     </div>
 
-    <div class="grid grid-cols-3 gap-sm" style="margin-bottom: var(--space-xl); text-align: center;">
+    <div class="grid grid-cols-3 gap-sm" style="margin: var(--space-xl) 0; text-align: center;">
       <div class="card" style="padding: var(--space-md);">
-        <div id="stat-challenges" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
-        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Challenges</div>
+        <div id="stat-challenges" style="font-size: var(--text-2xl); font-family: var(--font-display); color: var(--color-gold);">0</div>
+        <div style="font-size: var(--text-xs); color: #8B7A5E;">Trials Passed</div>
       </div>
       <div class="card" style="padding: var(--space-md);">
-        <div id="stat-co2" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
-        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">kg CO₂ Saved</div>
+        <div id="stat-co2" style="font-size: var(--text-2xl); font-family: var(--font-display); color: var(--color-gold);">0</div>
+        <div style="font-size: var(--text-xs); color: #8B7A5E;">Burdens Lifted</div>
       </div>
       <div class="card" style="padding: var(--space-md);">
-        <div id="stat-streak" style="font-size: var(--text-2xl); font-weight: bold; color: var(--color-primary);">0</div>
-        <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Day Streak</div>
+        <div id="stat-streak" style="font-size: var(--text-2xl); font-family: var(--font-display); color: var(--color-gold);">0</div>
+        <div style="font-size: var(--text-xs); color: #8B7A5E;">Days Devoted</div>
       </div>
     </div>
 
-    <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Your Badges</h3>
+    <h3 class="page-title" style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Relics Earned</h3>
     <div id="badges-grid" class="grid grid-cols-3 md:grid-cols-4 gap-sm" style="margin-bottom: var(--space-xl);">
       <!-- Populated by JS -->
     </div>
 
-    <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Impact Dashboard</h3>
+    <h3 class="page-title" style="font-size: var(--text-2xl); margin-bottom: var(--space-md);">Chronicles</h3>
     <div class="card" style="margin-bottom: var(--space-md);">
       <div id="chart-line" style="width: 100%; height: 250px;"></div>
     </div>
-    <div class="card" style="margin-bottom: var(--space-xl);">
-      <div id="chart-donut" style="width: 100%; height: 250px;"></div>
-    </div>
   </section>
 
-  <!-- Tooltip & Overlays -->
-  <div id="tree-tooltip" class="tree-tooltip" role="tooltip"></div>
-  <div id="flash-overlay" class="flash-overlay"></div>
-  <div id="level-up-card" class="level-up-card card">
-    <h3 id="level-up-title" style="font-size: var(--text-2xl); color: var(--color-primary); margin-bottom: var(--space-sm);">You've grown!</h3>
-    <p style="color: var(--color-text-muted);">The forest celebrates your progress.</p>
+  <!-- Level Up Card -->
+  <div id="level-up-card" class="card level-up-card">
+    <h3 id="level-up-title" class="page-title" style="font-size: var(--text-3xl); margin-bottom: var(--space-sm);">New Dawn</h3>
+    <p style="color: var(--color-text-dark); font-style: italic;">The forest acknowledges your growth.</p>
   </div>
 
-  <!-- Application Scripts -->
   <script src="./js/config.js"></script>
+  <script src="./js/portal.js"></script>
   <script src="./js/app.js"></script>
-  <script src="./js/tree.js"></script>
   <script src="./js/auth.js"></script>
   <script src="./js/challenges.js"></script>
   <script src="./js/leaderboard.js"></script>
   <script src="./js/gemini.js"></script>
   <script src="./js/charts.js"></script>
-  <script src="./js/pwa.js"></script>
 
 </body>
 </html>

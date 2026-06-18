@@ -210,6 +210,13 @@ window.updateUserDataAfterChallenge = async function(challenge) {
   user.totalCO2Saved = (user.totalCO2Saved || 0) + challenge.co2;
 
   const levelInfo = getLevelInfo(user.xp);
+  
+  if (levelInfo.level > user.level) {
+    if (window.triggerLevelUpPortalFX) {
+      window.triggerLevelUpPortalFX(levelInfo.title);
+    }
+  }
+  
   user.level = levelInfo.level;
   
   // To ensure UI sees the change, we assign the mutated object back
@@ -265,8 +272,7 @@ function updateUIWithUserData() {
   if (!user) return;
 
   // Home Page
-  document.getElementById('home-greeting').innerText = `Good morning, ${user.displayName.split(' ')[0]} 🌿`;
-  document.getElementById('home-avatar').src = user.photoURL;
+  document.getElementById('home-greeting').innerText = `Greetings, ${user.displayName.split(' ')[0]}`;
   document.getElementById('home-streak').innerText = `🔥 ${user.streak} day streak`;
   document.getElementById('home-xp-badge').innerText = `${user.xp} XP`;
   
@@ -287,9 +293,16 @@ function updateUIWithUserData() {
   }
 
   // Profile Page
-  document.getElementById('profile-name').innerText = user.displayName;
-  document.getElementById('profile-avatar').src = user.photoURL;
-  document.getElementById('profile-level').innerText = levelInfo.title;
+  const profileNameEl = document.getElementById('profile-name');
+  if (profileNameEl) profileNameEl.innerText = user.displayName;
+  
+  const profileCrestEl = document.getElementById('profile-crest');
+  if (profileCrestEl && window.generateProceduralCrest) {
+    profileCrestEl.innerText = window.generateProceduralCrest(user.displayName);
+  }
+
+  const profileLevelEl = document.getElementById('profile-level');
+  if (profileLevelEl) profileLevelEl.innerText = levelInfo.title;
   
   let totalChallenges = 0;
   for (const date in user.completedChallenges) {

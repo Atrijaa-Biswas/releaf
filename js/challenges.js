@@ -106,6 +106,10 @@ window.completeChallenge = async function(challengeId) {
     await window.updateUserDataAfterChallenge(challenge);
   }
 
+  if (window.triggerChallengeCompletePortalFX) {
+    window.triggerChallengeCompletePortalFX();
+  }
+
   // Re-render
   window.renderChallenges();
   if (window.renderHome) window.renderHome(); // Update home state
