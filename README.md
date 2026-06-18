@@ -1,55 +1,79 @@
-# ReLeaf
+# 🌿 ReLeaf: The Enchanted Forest Portal
 
-**Gamified Carbon Footprint Reduction**
+ReLeaf is a gamified, immersive web application designed to help users track and reduce their carbon footprint through daily "eco-missions". It transforms the mundane task of habit tracking into an interactive journey through an ancient, magical forest.
 
-Every choice leaves a mark. Make yours green.
+## ✨ Features
 
-## Overview
-ReLeaf is a Progressive Web App (PWA) that turns everyday eco-friendly choices into a rewarding game. Users complete daily sustainability challenges to earn XP, level up, and compete on a live leaderboard. An integrated AI coach (powered by Gemini) provides personalized weekly missions and tips.
+- **Interactive Parallax Environment:** A deep, 5-layer SVG forest background that reacts to mouse movement and device tilt, complete with dynamic lighting and ambient animations.
+- **Ancient Material UI:** A meticulously crafted design system utilizing parchment scroll textures, wax seal buttons, carved wood accents, and glowing inkwell inputs.
+- **Living Tree Progress:** As you earn XP by completing trials, your personal "Tree of Life" physically grows and evolves through multiple stages of life.
+- **The Oracle (AI Eco Coach):** Powered by Groq's LLaMA-3.1 API, the Oracle generates personalized weekly quests based on your habits and answers environmental questions in a thematic, immersive tone.
+- **Procedural Heraldic Crests:** Replaces standard avatars with unique, procedurally generated animal crests (Stag, Owl, Fox, etc.) based on your username.
+- **Hall of Champions:** A global leaderboard highlighting the top environmental stewards with a physical podium display.
+- **Micro-interactions:** Magical touches including morning mist on load, ink ripples when typing, and auditory cues for actions.
 
-## Approach
-*   **Architecture:** Single Page Application (SPA) / Progressive Web App (PWA)
-*   **Tech Stack:** Vanilla HTML, CSS, JavaScript
-*   **Authentication & Database:** Firebase Auth (Google Sign-In) and Firebase Realtime Database
-*   **AI Integration:** Groq API for AI Coach and personalized weekly missions
-*   **Data Visualization:** Google Charts for tracking carbon footprint reduction
+## 🚀 Getting Started
 
-## Project Structure
-*   `index.html`: Main SPA app shell
-*   `css/style.css`: Design system and global styles
-*   `js/`: JavaScript modules for routing, auth, challenges, leaderboard, Gemini, and charts
-*   `sw.js` & `manifest.json`: PWA offline support and installation
+### Prerequisites
+- A modern web browser.
+- (Optional) Firebase project credentials for persistent data and authentication.
+- (Optional) Groq API Key for the AI Oracle features.
 
-## External Services Used
-*   **Firebase Auth:** For secure Google Sign-In.
-*   **Firebase Realtime Database:** For syncing user progress, completed challenges, and live leaderboards.
-*   **Groq API (Llama 3):** To act as the "Eco Coach", generating weekly personalized missions based on the user's past completed challenges, and answering questions in the chat.
-*   **Google Charts:** To visualize CO2 saved over time and by category.
-*   **Google Translate API:** For embedded language switching (widget).
+*Note: If no API keys are provided, ReLeaf will automatically fall back to a fully functional **Mock Mode**, allowing you to experience the UI, challenges, and animations without any setup.*
 
-## Local Development Setup
-1. Clone this repository.
-2. Duplicate `js/config.example.js` and rename it to `js/config.js`.
-3. Fill in your Firebase configuration and Groq API key in `js/config.js`.
-4. Run a local web server (e.g., using `npx serve` or Python's `http.server`).
+### Local Development
+
+1. Clone the repository:
    ```bash
-   npx serve .
+   git clone https://github.com/your-repo/releaf.git
+   cd releaf
    ```
-5. **Note on API Keys:** `js/config.js` is added to `.gitignore` to prevent accidentally committing your Firebase and Groq API keys to GitHub.
-
-## Deployment
-
-This repository includes a `Dockerfile` and `nginx.conf` pre-configured for Google Cloud Run (which expects apps to listen on port 8080).
-
-1. Ensure your `js/config.js` is properly filled out locally (it will be bundled into the Docker image).
-2. Install the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) and authenticate.
-3. Deploy directly using Cloud Build:
+2. Serve the directory using any static file server:
    ```bash
-   gcloud run deploy releaf-app --source . --port 8080 --allow-unauthenticated
+   npx http-server .
+   # or
+   python -m http.server 8080
    ```
-4. **IMPORTANT**: After deployment, copy the URL Cloud Run gives you (e.g., `https://releaf-app-xxxxx.run.app`).
-5. Go to your Firebase Console > Authentication > Settings > Authorized domains and add that Cloud Run URL so Google Sign-In is allowed!
+3. Open `http://localhost:8080` in your browser.
 
-## Assumptions
-*   **Connectivity:** While the app has a service worker for basic offline caching of the UI, an active internet connection is assumed for Firebase syncing and Gemini API calls. (Challenges completed offline will be stored locally and synced later).
-*   **CO₂ Data:** The CO₂ savings attached to challenges are estimates based on published global averages and are intended for gamification purposes.
+### Configuration (Environment Variables)
+
+To connect ReLeaf to your own Firebase and Groq instances, copy the template and provide your keys:
+
+1. Update `js/config.js` (or inject them via the Docker entrypoint):
+   - `FIREBASE_API_KEY`
+   - `FIREBASE_AUTH_DOMAIN`
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_STORAGE_BUCKET`
+   - `FIREBASE_MESSAGING_SENDER_ID`
+   - `FIREBASE_APP_ID`
+   - `GROQ_API_KEY`
+
+### Docker Deployment
+
+ReLeaf comes with a lightweight Nginx Dockerfile that automatically injects environment variables into the static frontend at runtime.
+
+1. Build the image:
+   ```bash
+   docker build -t releaf-app .
+   ```
+2. Run the container:
+   ```bash
+   docker run -p 8080:8080 \
+     -e FIREBASE_API_KEY="your_key" \
+     -e GROQ_API_KEY="your_key" \
+     releaf-app
+   ```
+
+## 🛠️ Architecture
+
+- **Frontend:** Pure HTML, CSS, and Vanilla JavaScript (No heavy frameworks).
+- **Styling:** Custom CSS implementing the "Candlelight and Moonlight" palette with advanced CSS variables and flex/grid layouts.
+- **Backend:** Firebase Authentication and Realtime Database.
+- **AI Integration:** Direct REST calls to Groq's OpenAI-compatible API endpoints.
+- **Hosting:** Dockerized Nginx with an `entrypoint.sh` script for runtime configuration.
+
+## 🎨 Design Philosophy
+*"The app does not look like software. It looks like an illuminated manuscript that came alive."*
+
+ReLeaf rejects standard flat design in favor of tactile, physical elements. Buttons depress like stamped wax, text shadows simulate ink bleeding into parchment, and the interface is integrated directly into the woodland scene.
