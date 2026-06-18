@@ -311,6 +311,18 @@ function updateUIWithUserData() {
   document.getElementById('stat-challenges').innerText = totalChallenges;
   document.getElementById('stat-co2').innerText = (user.totalCO2Saved || 0).toFixed(1);
   document.getElementById('stat-streak').innerText = user.streak || 0;
+
+  const chroniclesContent = document.getElementById('chronicles-content');
+  if (chroniclesContent) {
+    if (totalChallenges > 0) {
+      chroniclesContent.innerHTML = `<p style="font-family: var(--font-body); color: #1C1C1E; font-size: var(--text-base); text-align: left; line-height: 1.6; font-style: normal; text-shadow: none;">"This week, you cycled twice, skipped meat three times, and saved ${(user.totalCO2Saved || 0).toFixed(1)} kg of CO₂ — a quiet but steady week for the forest."</p>`;
+    } else {
+      chroniclesContent.innerHTML = `
+        <div style="font-size: 40px; margin-bottom: 8px;">✒️</div>
+        Your story is just beginning. Complete your first Trial to write your first Chronicle.
+      `;
+    }
+  }
 }
 
 window.renderHome = function() {

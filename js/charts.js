@@ -32,14 +32,17 @@ window.renderProfile = function() {
       if (b.rarity === 'Legendary') borderCol = 'var(--color-gold)';
 
       const card = document.createElement('div');
-      card.className = 'card flex-col items-center justify-center';
-      card.style.padding = 'var(--space-md) var(--space-sm)';
-      card.style.border = `2px solid ${borderCol}`;
-      card.title = b.cond;
+      card.className = 'card flex-col justify-center';
+      card.style.padding = 'var(--space-sm)';
+      card.style.border = `3px solid ${borderCol}`;
+      card.style.minHeight = '80px';
       
       card.innerHTML = `
-        <div style="font-size: var(--text-2xl); margin-bottom: var(--space-xs);">${b.icon}</div>
-        <div style="font-size: 0.65rem; text-align: center; font-weight: bold;">${b.name}</div>
+        <div class="flex items-center gap-sm" style="margin-bottom: 4px;">
+          <div class="badge-medallion badge-${b.rarity.toLowerCase()}" style="font-size: var(--text-xl); flex-shrink: 0; width: 40px; height: 40px;">${b.icon}</div>
+          <div style="font-weight: bold; font-family: var(--font-display); font-size: var(--text-base); color: #1C1C1E; line-height: 1.1;">${b.name}</div>
+        </div>
+        <div style="font-size: var(--text-xs); color: #3B1F0A; font-style: italic;">${b.cond}</div>
       `;
       badgesGrid.appendChild(card);
     });

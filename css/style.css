@@ -67,6 +67,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 /* Scrollbar */
@@ -240,6 +241,7 @@ h1, h2, h3, .display-font {
     /* Fake paper grain */
     url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
   transition: transform 0.3s ease;
+  text-shadow: none;
 }
 
 .card:hover {
@@ -265,9 +267,26 @@ h1, h2, h3, .display-font {
   font-style: italic;
   font-weight: 700;
   border-radius: 2px 6px 2px 6px;
-  background: rgba(201, 146, 42, 0.15);
-  color: #5C4010;
+  background: var(--color-paper);
+  color: #3B1F0A;
   border: 1px solid rgba(201, 146, 42, 0.5);
+  text-shadow: none;
+}
+
+.filter-btn {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #E8DECA;
+}
+
+.filter-btn.btn-primary {
+  background: var(--color-wax);
+  color: var(--color-paper);
+  border-color: #143325;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .chip.dark {

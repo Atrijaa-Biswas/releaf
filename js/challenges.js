@@ -76,7 +76,7 @@ window.renderChallenges = function() {
         <p style="color: var(--color-accent); font-weight: bold; margin-bottom: var(--space-md);">Saves ~${c.co2} kg CO₂</p>
       </div>
       <div class="flex-col gap-sm">
-        <div class="chip" style="align-self: flex-start; background: var(--color-primary); color: white;">+${c.xp} XP</div>
+        <div class="chip" style="align-self: flex-start; background: var(--color-gold); color: #7A4F00; font-size: 0.8rem; font-weight: bold;">+${c.xp} XP</div>
         <button class="btn ${isCompleted ? 'btn-secondary' : 'btn-primary'}" 
                 style="width: 100%; margin-top: var(--space-sm);" 
                 ${isCompleted ? 'disabled' : `onclick="completeChallenge('${c.id}')"`}>
