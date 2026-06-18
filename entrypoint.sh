@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# Write config.js from environment variables injected by Cloud Run
+mkdir -p /usr/share/nginx/html/js
+
 cat > /usr/share/nginx/html/js/config.js <<EOF
 window.RELEAF_CONFIG = {
   firebase: {
@@ -11,12 +12,13 @@ window.RELEAF_CONFIG = {
     messagingSenderId: "${FIREBASE_MESSAGING_SENDER_ID}",
     appId: "${FIREBASE_APP_ID}"
   },
-  groqApiKey: "${GROQ_API_KEY}"
+  groq: {
+    apiKey: "${GROQ_API_KEY}"
+  },
   env: {
     DEBUG: true
   }
 };
 EOF
 
-# Start nginx normally
 nginx -g "daemon off;"

@@ -4,7 +4,7 @@ let chatHistory = [
 
 async function callGemini(promptText, useHistory = false) {
   const config = window.RELEAF_CONFIG;
-  const isMock = !config || config.gemini.apiKey === "YOUR_GEMINI_API_KEY" || config.gemini.apiKey.startsWith("AIzaSy");
+  const isMock = !config || config.groq.apiKey === "YOUR_GROQ_API_KEY" || config.groq.apiKey.startsWith("gsk_");
 
   if (isMock) {
     if (window.app.debug) window.app.debug('Mocking AI response');
@@ -24,7 +24,7 @@ async function callGemini(promptText, useHistory = false) {
   }
 
   // Real Call using Groq REST API
-  const apiKey = config.gemini.apiKey;
+  const apiKey = config.groq.apiKey;
   const url = `https://api.groq.com/openai/v1/chat/completions`;
 
   let messages = [];
@@ -37,16 +37,16 @@ async function callGemini(promptText, useHistory = false) {
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
         messages: messages
       })
     });
-    
+
     const data = await response.json();
     if (data.choices && data.choices[0]) {
       const text = data.choices[0].message.content;
@@ -63,7 +63,7 @@ async function callGemini(promptText, useHistory = false) {
   }
 }
 
-window.fetchDailyTip = async function() {
+window.fetchDailyTip = async function () {
   const tipEl = document.getElementById('home-daily-tip');
   if (!tipEl || tipEl.dataset.loaded) return;
 
@@ -74,12 +74,12 @@ window.fetchDailyTip = async function() {
   tipEl.dataset.loaded = 'true';
 };
 
-window.renderCoach = async function() {
+window.renderCoach = async function () {
   const missionsContainer = document.getElementById('missions-container');
   if (missionsContainer.dataset.loaded) return;
 
   missionsContainer.innerHTML = '<div class="card" style="grid-column: 1 / -1; text-align: center;">Analyzing your habits to generate missions...</div>';
-  
+
   const user = window.app.currentUser;
   let historyStr = 'None yet';
   if (user && user.completedChallenges) {
@@ -90,12 +90,12 @@ window.renderCoach = async function() {
   const prompt = `You are the ReLeaf eco coach. Based on the user's recent completed challenges: [${historyStr}], generate exactly 3 personalized eco missions for this week that target areas they haven't focused on. Return ONLY a JSON array with no markdown formatting (no \`\`\`json), no preamble: [{"title": "string", "description": "string", "xp": number, "category": "string"}]`;
 
   const responseText = await callGemini(prompt);
-  
+
   try {
     // Clean potential markdown from Gemini
     const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
     const missions = JSON.parse(cleanJson);
-    
+
     missionsContainer.innerHTML = '';
     missions.forEach(m => {
       const card = document.createElement('div');
@@ -122,7 +122,7 @@ window.renderCoach = async function() {
           xp: m.xp || 20,
           co2: 1.0
         });
-        
+
         btn.innerText = 'Accepted ✓';
         btn.disabled = true;
         btn.classList.remove('btn-secondary');
@@ -167,9 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call Gemini
     let contextPrompt = `You are ReLeaf's eco coach. The user is trying to reduce their carbon footprint through daily green challenges. Be encouraging, specific, and practical. Keep responses under 150 words unless asked for more. User says: ${text}`;
-    
+
     const reply = await callGemini(contextPrompt, true);
-    
+
     // Replace typing with response
     windowEl.removeChild(typing);
     const botMsg = document.createElement('div');
