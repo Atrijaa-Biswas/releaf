@@ -1,12 +1,6 @@
 FROM nginx:alpine
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy static assets to nginx html directory
-COPY . /usr/share/nginx/html/
-
-# Cloud Run requirement
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/entrypoint.sh"]
