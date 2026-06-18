@@ -4,7 +4,7 @@ let chatHistory = [
 
 async function callGemini(promptText, useHistory = false) {
   const config = window.RELEAF_CONFIG;
-  const isMock = !config || config.groq.apiKey === "YOUR_GROQ_API_KEY" || config.groq.apiKey.startsWith("gsk_");
+  const isMock = !config || !config.groq || !config.groq.apiKey || config.groq.apiKey === "YOUR_GROQ_API_KEY";
 
   if (isMock) {
     if (window.app.debug) window.app.debug('Mocking AI response');
